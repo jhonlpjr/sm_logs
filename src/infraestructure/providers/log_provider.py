@@ -1,0 +1,3 @@
+from src.infraestructure.database.repositories.log_mongodb_repository import LogMongoDBRepository
+
+LOG_REPOSITORY_PROVIDER = LogMongoDBRepository
