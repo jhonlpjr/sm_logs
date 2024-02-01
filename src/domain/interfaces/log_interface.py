@@ -4,7 +4,7 @@ from typing import Optional
 
 class ILog(ABC):
     
-    id: int
+    id: str
     
     prevStatus: object
 

@@ -1,6 +1,7 @@
 from src.domain.interfaces.log_interface import ILog
 from src.domain.repository.log_repository import LogRepository
 from src.infraestructure.database.config.adapter_mongodb import MongoDBAdapter
+from pymongo.results import InsertOneResult
 from typing import Any
 class LogMongoDBRepository(LogRepository):
     
@@ -16,12 +17,14 @@ class LogMongoDBRepository(LogRepository):
         # Lógica para guardar el log en la base de datos MongoDB
         #logDict = log.__dict__
         #collection = self.collection.insert_one(log)
-        self.collection.insert_one(log)
-        return log
+        result: InsertOneResult = self.collection.insert_one(log)
+        inserted_id = result.inserted_id
+        inserted_log = self.collection.find_one({"_id": inserted_id})
+        return inserted_log
 
     def findAll(self, query: Any):
         # Lógica para obtener los logs de la base de datos MongoDB
-        dataCollections = self.collection.find({}, query)
+        dataCollections = self.collection.find(query)
         collections: list[dict[ILog, Any]] = list(dataCollections)
         return collections
     
