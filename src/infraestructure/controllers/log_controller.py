@@ -2,6 +2,7 @@ import json
 from flask import Blueprint, jsonify, request
 from collections import namedtuple
 from types import SimpleNamespace
+from src.infraestructure.dto.request.find_logs_dto_req import FindLogsRequestDto
 from src.infraestructure.dto.request.create_log_dto_req import CreateLogDtoReq
 
 from src.application.usecases.create_log_usecase import CreateLogUsecase
@@ -24,9 +25,8 @@ def save_log(collection_name):
         #bodyRaw = json.loads(request.json)
         #body = SimpleNamespace(**bodyRaw)
         dto = CreateLogDtoReq(request.json)
-        log = useCase.execute(dto, 1)
+        response = useCase.execute(dto, 1)
 
-        response = json.dumps(log.__dict__)
         return response, 201
     
     except Exception as e:
@@ -37,15 +37,14 @@ def save_log(collection_name):
 def get_logs(collection_name):
     # llamando al caso de uso para obtener logs
     useCase = FindLogsUsecase(collection_name)
-    data = request.args
-    logs = useCase.execute(data)
-    response = json.dumps([obj.__dict__ for obj in logs])
+    dto = FindLogsRequestDto(request.args) 
+    response = useCase.execute(dto.filter)
     if response:
         return response, 200
     else:
         return jsonify({'error': 'Logs not found'}), 404
 
-@log_bp.route('/log/<string:collection>/<int:log_id>', methods=['GET'])
+@log_bp.route('/log/<string:collection_name>/<int:log_id>', methods=['GET'])
 def get_log(collection_name, log_id):
     # llamando al caso de uso para obtener un log
     useCase = FindOneLogUsecase(collection_name)

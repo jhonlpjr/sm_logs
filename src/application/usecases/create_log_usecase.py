@@ -1,5 +1,8 @@
 # app/use_cases.py
 
+from types import SimpleNamespace
+
+from flask import json
 from src.application.dto.create_log_dto import CreateLogDto
 from src.infraestructure.providers.log_provider import LOG_REPOSITORY_PROVIDER
 from src.domain.entities.log_entity import LogEntity
@@ -13,6 +16,6 @@ class CreateLogUsecase:
     def execute(self, log: CreateLogDto, createdBy: int):
         # Lógica para guardar el log en la base de datos MongoDB
         log.createdBy = createdBy
-        data = self.log_repository.save(log)
-        logCreated = LogEntity(data)
-        return logCreated
+        dataLog = self.log_repository.save(log)
+        resLog = json.dumps(dataLog)
+        return resLog
