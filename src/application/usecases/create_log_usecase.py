@@ -8,9 +8,7 @@ from src.domain.repository.log_repository import LogRepository
 
 class CreateLogUsecase:
     def __init__(self, collectionName: str):
-        
         self.log_repository: LogRepository = LOG_REPOSITORY_PROVIDER(collectionName)
-        print('>>>>>>>consiguientdo el repo',collectionName, self.log_repository)
     
     def execute(self, log: CreateLogDto, createdBy: int):
         # Lógica para guardar el log en la base de datos MongoDB

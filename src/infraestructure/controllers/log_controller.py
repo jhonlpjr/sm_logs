@@ -27,7 +27,6 @@ def save_log(collection_name):
         log = useCase.execute(dto, 1)
 
         response = json.dumps(log.__dict__)
-        #print(">>>>>>>>>>>>>>>>>>>>>>>>>>>response", response)
         return response, 201
     
     except Exception as e:
@@ -37,12 +36,12 @@ def save_log(collection_name):
 @log_bp.route('/log/<string:collection_name>', methods=['GET'])
 def get_logs(collection_name):
     # llamando al caso de uso para obtener logs
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>acaaa", collection_name)
     useCase = FindLogsUsecase(collection_name)
     data = request.args
-    log = useCase.execute(data)
-    if log:
-        return jsonify(log), 200
+    logs = useCase.execute(data)
+    response = json.dumps([obj.__dict__ for obj in logs])
+    if response:
+        return response, 200
     else:
         return jsonify({'error': 'Logs not found'}), 404
 
@@ -51,7 +50,8 @@ def get_log(collection_name, log_id):
     # llamando al caso de uso para obtener un log
     useCase = FindOneLogUsecase(collection_name)
     log = useCase.execute(log_id)
-    if log:
-        return jsonify(log), 200
+    response = json.dumps(log.__dict__)
+    if response:
+        return response, 200
     else:
         return jsonify({'error': 'Log not found'}), 404

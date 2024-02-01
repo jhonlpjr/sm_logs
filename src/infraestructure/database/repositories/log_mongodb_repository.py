@@ -22,7 +22,6 @@ class LogMongoDBRepository(LogRepository):
         # Lógica para obtener los logs de la base de datos MongoDB
         dataCollections = self.collection.find(query)
         collections = list(dataCollections)
-        print('>>>>>>>>>>>Collections', collections)
         return collections
     
     def findById(self, id: int):

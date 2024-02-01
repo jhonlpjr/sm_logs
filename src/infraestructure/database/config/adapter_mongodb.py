@@ -5,13 +5,12 @@ from src.shared.enums.config_enum import CONFIG
 
 class MongoDBAdapter:
     def get_client():
-        print('>>>>>>>>>>MUESTRAAA CONF MONGO>>>>>>>>', os.getenv(CONFIG.MONGO_URL.value))
         try:
             client = MongoClient(os.getenv(CONFIG.MONGO_URL.value), server_api=ServerApi('1'))
             client.admin.command('ping')
-            print('>>>>>>>>>>PINGUEADASO>>>>>>>>')
+            print('>>>>>>>>>>PING SUCCESS')
         except Exception as e:
-            print('>>>>>>>>>>ERRORSASO>>>>>>>>', e)
+            print('Error MongoDBAdapter:', e)
         return client
     
     def get_db():
