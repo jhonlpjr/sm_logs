@@ -8,7 +8,6 @@ class FindOneLogUsecase:
     def __init__(self, collectionName: str):
         
         self.log_repository: LogRepository = LOG_REPOSITORY_PROVIDER(collectionName)
-        print('>>>>>>>consiguientdo el repo',collectionName, self.log_repository)
     
     def execute(self, id: int):
         # Lógica para buscar logs

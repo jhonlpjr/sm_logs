@@ -4,7 +4,7 @@ from src.application.dto.create_log_dto import CreateLogDto
 
 
 class CreateLogSchema(Schema) :
-    id = fields.Integer(required=True)
+    id = fields.String(required=True)
     prevStatus = fields.Raw(required=False)
     nextStatus = fields.Raw(required=False)
     request = fields.Raw(required=False)
