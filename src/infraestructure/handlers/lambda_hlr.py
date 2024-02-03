@@ -7,14 +7,14 @@ logger.setLevel(logging.INFO)
 
 try:
     
-    app = Flask(__name__)
+    handler = Flask(__name__)
 
-    logger.info(' Starting ms-logs')
+    logger.info(' Starting lambda ms-logs')
 
-    app.register_blueprint(log_bp)
+    handler.register_blueprint(log_bp)
     
     if __name__ == "__main__":
-        app.run()
+        handler.run()
         
 except Exception as e:
     error_message = "main | Error: " + str(e)

@@ -25,3 +25,11 @@ dist/
 
 # Variable de entorno
 .env
+
+# Archivos y carpetas de serverless
+.serverless/
+
+# Archivos de node
+node_modules/
+package-lock.json
+```
