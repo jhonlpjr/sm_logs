@@ -11,7 +11,7 @@ plugins:
   - serverless-offline
 custom:
   wsgi:
-    lambdaLog: src/infraestructure/handlers/lambda_hlr.handler
+    app: src/infraestructure/handlers/lambda_hlr.handler
     packRequirements: false
   pythonRequirements:
     dockerizePip: non-linux
