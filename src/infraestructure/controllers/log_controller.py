@@ -38,7 +38,7 @@ def save_log(collection_name):
         reqBody = request.json
         dto = CreateLogDtoReq(reqBody)
         logger.info(" log_controller.save_log | request.body: " + str(reqBody))
-        result = useCase.execute(dto, 1)
+        result = useCase.execute(dto)
         response = {"message": "Log created successfully", "data": result}
         return jsonify(response), 201
     except ValidationError as e:

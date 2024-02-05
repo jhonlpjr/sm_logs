@@ -6,6 +6,8 @@ class ILog(ABC):
     
     id: str
     
+    operation: str
+    
     prevStatus: object
 
     nextStatus: object

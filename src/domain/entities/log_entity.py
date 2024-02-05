@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from src.domain.interfaces.log_interface import ILog
-from datetime import datetime
 
 @dataclass
 class LogEntity(ILog):
@@ -11,6 +10,9 @@ class LogEntity(ILog):
         
         if getattr(partial_log, 'id', None):
             self.id = partial_log.id
+            
+        if getattr(partial_log, 'operation', None):
+            self.operation = partial_log.operation
         
         if getattr(partial_log, 'prevStatus', None):
             self.prevStatus = partial_log.prevStatus

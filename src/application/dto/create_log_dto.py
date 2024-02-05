@@ -1,9 +1,12 @@
 from src.domain.interfaces.log_interface import ILog
-
+from typing import Optional
 
 class CreateLogDto :
-        id: int
-        prevStatus: object
+        id: str
+        operation: str
+        prevStatus: Optional[object]
         nextStatus: object
-        request: object
-        response: object
+        request: Optional[object]
+        response: Optional[object]
+        createdBy: Optional[int]
+        status: Optional[bool]

@@ -1,7 +1,7 @@
 import json
 import logging
 from marshmallow import ValidationError
-from infraestructure.dto.request.create_log_dto_req import CreateLogDtoReq
+from src.infraestructure.dto.request.create_log_dto_req import CreateLogDtoReq
 from src.application.usecases.create_log_usecase import CreateLogUsecase
 from src.infraestructure.controllers.log_controller import save_log
 
@@ -12,19 +12,22 @@ logger.setLevel(logging.INFO)
 def save_log_handler(event, context):
     try:
         logger.info(" Message for sqs ms-save-log")
+
         for record in event["Records"]:
             # El cuerpo del mensaje se encuentra en 'body'
-            msg_body = json.loads["body"]
-            msg_collection = record["collection"]
+            logger.info(" Record" + str(record))
+            msg_body = json.loads(record["body"])
+            msg_collection = msg_body["collection"]
+            msg_dto = msg_body["dto"]
             # Aquí puedes pasar message_body a tu caso de uso
             # Por ejemplo:
             useCase = CreateLogUsecase(msg_collection)
-            dto = CreateLogDtoReq(msg_body)
+            dto = CreateLogDtoReq(msg_dto)
             logger.info(" sqs_hlr.save_log_handler | msg_collection: " + msg_collection)
-            logger.info(" sqs_hlr.save_log_handler | msg_body: " + str(msg_body))
-            result = useCase.execute(dto, 1)
+            logger.info(" sqs_hlr.save_log_handler | msg_dto: " + str(msg_dto))
+            result = useCase.execute(dto)
             response = {"message": "Log created successfully", "data": result}
-            logger.info("response:", response)
+            logger.info("response:", str(response))
 
     except ValidationError as e:
         error_message = "sqs_hlr.save_log_handler | Error de validación: " + str(e)

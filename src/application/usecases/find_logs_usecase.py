@@ -20,5 +20,5 @@ class FindLogsUsecase:
         # Lógica para buscar logs
         data = self.log_repository.findAll(logFilters)
         logs = [LogEntity(SimpleNamespace(**element)) for element in data]
-        resLogs = json.dumps([obj.__dict__ for obj in logs])
+        resLogs = [obj.__dict__ for obj in logs]
         return resLogs
